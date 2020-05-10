@@ -1,6 +1,6 @@
 const { gql } = require("apollo-server");
 
-//Schema
+// Schema
 const typeDefs = gql`
   type Usuario {
     id: ID
@@ -29,7 +29,7 @@ const typeDefs = gql`
     empresa: String
     email: String
     telefono: String
-    vendedor: Usuario
+    vendedor: ID
   }
 
   type Pedido {
@@ -37,7 +37,7 @@ const typeDefs = gql`
     pedido: [PedidoGrupo]
     total: Float
     cliente: Cliente
-    vendedor: Usuario
+    vendedor: ID
     fecha: String
     estado: EstadoPedido
   }
@@ -46,6 +46,7 @@ const typeDefs = gql`
     id: ID
     cantidad: Int
     nombre: String
+    precio: Float
   }
 
   type TopCliente {
@@ -87,12 +88,14 @@ const typeDefs = gql`
   input PedidoProductoInput {
     id: ID
     cantidad: Int
+    nombre: String
+    precio: Float
   }
 
   input PedidoInput {
     pedido: [PedidoProductoInput]
     total: Float
-    cliente: Cliente
+    cliente: ID
     estado: EstadoPedido
   }
 
@@ -106,24 +109,22 @@ const typeDefs = gql`
     #Usuarios
     obtenerUsuario: Usuario
 
-    # Produtos
+    # Productos
     obtenerProductos: [Producto]
-
-    # Producto
     obtenerProducto(id: ID!): Producto
 
-    # Clientes
+    #Clientes
     obtenerClientes: [Cliente]
     obtenerClientesVendedor: [Cliente]
     obtenerCliente(id: ID!): Cliente
 
-    #Pedidos
+    # Pedidos
     obtenerPedidos: [Pedido]
     obtenerPedidosVendedor: [Pedido]
     obtenerPedido(id: ID!): Pedido
     obtenerPedidosEstado(estado: String!): [Pedido]
 
-    #Busquedas Avanzadas
+    # Busquedas Avanzadas
     mejoresClientes: [TopCliente]
     mejoresVendedores: [TopVendedor]
     buscarProducto(texto: String!): [Producto]
@@ -144,7 +145,7 @@ const typeDefs = gql`
     actualizarCliente(id: ID!, input: ClienteInput): Cliente
     eliminarCliente(id: ID!): String
 
-    #Pedidos
+    # Pedidos
     nuevoPedido(input: PedidoInput): Pedido
     actualizarPedido(id: ID!, input: PedidoInput): Pedido
     eliminarPedido(id: ID!): String
