@@ -17,6 +17,16 @@ const crearToken = (usuario, secreta, expiresIn) => {
 //Resolvers
 
 const resolvers = {
+  Pedido: {
+    vendedor: async (id, _, { usuario }) => {
+      Usuario.findById(id);
+    },
+    Cliente: {
+      vendedor: async (id, _, { usuario }) => {
+        Cliente.findById(id);
+      }
+    }
+  },
   Query: {
     obtenerUsuario: async (_, {}, ctx) => {
       return ctx.usuario;
