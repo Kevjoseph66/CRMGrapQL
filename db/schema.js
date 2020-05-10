@@ -29,7 +29,7 @@ const typeDefs = gql`
     empresa: String
     email: String
     telefono: String
-    vendedor: ID
+    vendedor: Usuario
   }
 
   type Pedido {
@@ -92,7 +92,7 @@ const typeDefs = gql`
   input PedidoInput {
     pedido: [PedidoProductoInput]
     total: Float
-    cliente: ID
+    cliente: Cliente
     estado: EstadoPedido
   }
 
